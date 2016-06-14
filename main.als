@@ -3,9 +3,7 @@ open dsl/syntax
 open dsl/learn
 
 one sig Input0 extends Text{}
-one sig Input1 extends Text{}
 one sig Output0 extends Text{}
-one sig Output1 extends Text{}
 
 fact{
 	Text.text.elems in {"0" + "1" + "2" + "3" + "4" +  "5" +  "6" + "7" + "8" + "9" + "-" + "(" + ")"}
