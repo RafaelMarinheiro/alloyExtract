@@ -30,7 +30,7 @@ sig SubstringFunction extends Function{
 }
 
 //Its output should be a substring of the child function
-pred SubstringSemantics[f : SubstringFunction, input : Text, eval : (Function -> Text)]{
+pred SubstringSemantics[f : SubstringFunction, input : Text, eval : (Function -> one Text)]{
 	f.begin >= 0
 	f.end <= eval[f.child].text.lastIdx
 	f.begin <= f.end
@@ -44,7 +44,7 @@ sig ConcatFunction extends Function{
 }
 
 //Its output should be the concatenation of the left and the right side
-pred ConcatSemantics[f : ConcatFunction, input : Text, eval : (Function -> Text)]{
+pred ConcatSemantics[f : ConcatFunction, input : Text, eval : (Function -> one Text)]{
 	eval[f].text = eval[f.left].text.append[eval[f.right].text]
 }
 
@@ -63,7 +63,8 @@ fact FunctionIsDAG{
 
 
 //Semantics checker
-pred Semantics[eval : (Function -> Text), input: Text]{
+pred Semantics[eval : (Function -> one Text), input: Text]{
+	all f : Function | one eval[f]
 	all f : ConstantFunction | ConstantSemantics[f, input, eval]
 	all f : InputFunction | InputSemantics[f, input, eval]
 	all f : SubstringFunction | SubstringSemantics[f, input, eval]
